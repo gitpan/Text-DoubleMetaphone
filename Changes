@@ -1,5 +1,9 @@
 Revision history for Perl extension Text::DoubleMetaphone.
 
+0.04 Tue Sep  5 01:59:27 PDT 2000
+        - Documentation fixes; add reference to 
+          Kevin Atkinson's work
+
 0.03 Tue Jul 25 15:18:40 PDT 2000 
         - remove C++ style comments
 

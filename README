@@ -11,7 +11,8 @@ COPYRIGHT
   All rights reserved.
 
   This code is based heavily on the C++ implementation by
-  Lawrence Philips.
+  Lawrence Philips and incorporates several bug fixes courtesy
+  of Kevin Atkinson <kevina@users.sourceforge.net>.
 
   This module is free software; you may redistribute it and/or
   modify it under the same terms as Perl itself.

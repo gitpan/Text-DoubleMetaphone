@@ -11,7 +11,7 @@ require AutoLoader;
 @ISA = qw( Exporter DynaLoader );
 @EXPORT_OK = qw( double_metaphone );
 
-$VERSION = '0.03';
+$VERSION = '0.04';
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
@@ -62,7 +62,7 @@ In contrast to the Soundex and Metaphone algorithms,
 Double Metaphone will sometimes return two encodings for
 words that can be plausibly pronounced multiple ways.      
 
-For additional details, see Philips' discussion of the algorith at:
+For additional details, see Philips' discussion of the algorithm at:
 
   http://www.cuj.com/archive/1806/feature.html
 
@@ -86,7 +86,8 @@ Copyright 2000, Maurice Aubrey E<lt>maurice@hevanet.comE<gt>.
 All rights reserved.
 
 This code is based heavily on the C++ implementation by
-Lawrence Philips.   
+Lawrence Philips, and incorporates several bug fixes courtesy
+of Kevin Atkinson E<lt>kevina@users.sourceforge.netE<gt>.
 
 This module is free software; you may redistribute it and/or
 modify it under the same terms as Perl itself.  
@@ -99,11 +100,12 @@ L<Text::Metaphone>, L<Text::Soundex>
 
 =head2 Additional References
 
-=over 3
+Philips, Lawrence. I<C/C++ Users Journal>, June, 2000.
 
-=item Philips, Lawrence. I<C/C++ Users Journal>, June, 2000.
-=item Philips, Lawrence. I<Computer Language>, Vol. 7, No. 12 (December), 1990.
+Philips, Lawrence. I<Computer Language>, Vol. 7, No. 12 (December), 1990.
 
-=back
+Kevin Atkinson (author of the Aspell spell checker) maintains
+a page dedicated to the Metaphone and Double Metaphone algorithms at 
+<http://aspell.sourceforge.net/metaphone/>
 
 =cut
