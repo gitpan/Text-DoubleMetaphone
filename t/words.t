@@ -43,7 +43,7 @@ while(defined(my $line = <$fh>)) {
   $c2 = '' unless defined $c2;
   if ($c1 ne $m1 or $c2 ne $m2) {
     print "not ok $test\n";
-    print STDERR "$word: '$c1' => '$m1', '$c2' => '$m1'\n";
+    # print STDERR "$word: '$c1' => '$m1', '$c2' => '$m1'\n";
   } else {
     print "ok $test\n";
   }
@@ -51,7 +51,7 @@ while(defined(my $line = <$fh>)) {
   $c1 = double_metaphone( $word );
   if ($c1 ne $m1) {
     print "not ok $test\n";
-    print STDERR "$word: '$c1' => '$m1'\n";
+    # print STDERR "$word: '$c1' => '$m1'\n";
   } else {
     print "ok $test\n";
   }

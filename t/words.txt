@@ -3,8 +3,8 @@ maurice,MRS
 aubrey,APR
 cambrillo,KMPR
 heidi,HT
-katherine,KORN,KTRN
-catherine,KORN,KTRN
+katherine,K0RN,KTRN
+catherine,K0RN,KTRN
 richard,RXRT,RKRT
 bob,PP
 eric,ARK
