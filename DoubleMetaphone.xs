@@ -40,24 +40,13 @@ double_metaphone(str)
 	char *	str
         PREINIT:
         char *codes[2];
-        SV   *sv1;
-        SV   *sv2;
         PPCODE:
         DoubleMetaphone(str, codes);
 
+        XPUSHs(sv_2mortal(newSVpv(codes[0], 0)));
         if ((GIMME == G_ARRAY) && strcmp(codes[0], codes[1])) 
           {
-            sv1 = sv_newmortal();
-            sv_usepvn((SV *) sv1, codes[0], strlen(codes[0]));
-            XPUSHs(sv1);      
-            sv2 = sv_newmortal();
-            sv_usepvn((SV *) sv2, codes[1], strlen(codes[1])); 
-            XPUSHs(sv2);
+            XPUSHs(sv_2mortal(newSVpv(codes[1], 0)));
           } 
-        else 
-          {
-            sv1 = sv_newmortal();
-            sv_usepvn((SV *) sv1, codes[0], strlen(codes[0]));
-            XPUSHs(sv1);          
-            free(codes[1]);
-          }
+        Safefree(codes[0]);
+        Safefree(codes[1]);

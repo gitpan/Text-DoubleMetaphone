@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
@@ -7,14 +6,35 @@
 #include <assert.h>
 #include "double_metaphone.h"
 
-/* XXX Look into using Perl's New() */
+/*
+* * If META_USE_PERL_MALLOC is defined we use Perl's memory routines.
+* */
+#ifdef META_USE_PERL_MALLOC
+ 
+#include "EXTERN.h"
+#include "perl.h"
+#define META_MALLOC(v,n,t) New(1,v,n,t)
+#define META_REALLOC(v,n,t) Renew(v,n,t)
+#define META_FREE(x) Safefree((x))
+ 
+#else
+ 
+#define META_MALLOC(v,n,t) \
+          (v = (t*)malloc(((n)*sizeof(t))))
+#define META_REALLOC(v,n,t) \
+	                  (v = (t*)realloc((v),((n)*sizeof(t))))
+#define META_FREE(x) free((x))
+	 
+#endif /* META_USE_PERL_MALLOC */
+
+
 metastring *
 NewMetaString(char *init_str)
 {
     metastring *s;
     char empty_string[] = "";
 
-    s = (metastring *) malloc(sizeof(metastring));
+    META_MALLOC(s, 1, metastring);
     assert( s != NULL );
 
     if (init_str == NULL)
@@ -23,7 +43,7 @@ NewMetaString(char *init_str)
     /* preallocate a bit more for potential growth */
     s->bufsize = s->length + 7;
 
-    s->str = (char *) malloc(s->bufsize);
+    META_MALLOC(s->str, s->bufsize, char);
     assert( s->str != NULL );
     
     strncpy(s->str, init_str, s->length + 1);
@@ -32,6 +52,7 @@ NewMetaString(char *init_str)
     return s;
 }
 
+
 void
 DestroyMetaString(metastring * s)
 {
@@ -39,21 +60,20 @@ DestroyMetaString(metastring * s)
 	return;
 
     if (s->free_string_on_destroy && (s->str != NULL))
-	free(s->str);
+	META_FREE(s->str);
 
-    free(s);
+    META_FREE(s);
 }
+
 
 void
 IncreaseBuffer(metastring * s, int chars_needed)
 {
-    char *new_str;
-
-    new_str = (char *) realloc(s->str, (s->bufsize + chars_needed + 10));
-    assert( new_str != NULL );
-    s->str = new_str;
+    META_REALLOC(s->str, (s->bufsize + chars_needed + 10), char);
+    assert( s->str != NULL );
     s->bufsize = s->bufsize + chars_needed + 10;
 }
+
 
 void
 MakeUpper(metastring * s)
@@ -65,6 +85,7 @@ MakeUpper(metastring * s)
 	  *i = toupper(*i);
       }
 }
+
 
 int
 IsVowel(metastring * s, int pos)
@@ -82,6 +103,7 @@ IsVowel(metastring * s, int pos)
     return 0;
 }
 
+
 int
 SlavoGermanic(metastring * s)
 {
@@ -97,11 +119,13 @@ SlavoGermanic(metastring * s)
 	return 0;
 }
 
+
 int
 GetLength(metastring * s)
 {
     return s->length;
 }
+
 
 char
 GetAt(metastring * s, int pos)
@@ -112,6 +136,7 @@ GetAt(metastring * s, int pos)
     return ((char) *(s->str + pos));
 }
 
+
 void
 SetAt(metastring * s, int pos, char c)
 {
@@ -120,6 +145,7 @@ SetAt(metastring * s, int pos, char c)
 
     *(s->str + pos) = c;
 }
+
 
 /* 
    Caveats: the START value is 0 based
@@ -150,6 +176,7 @@ StringAt(metastring * s, int start, int length, ...)
     return 0;
 }
 
+
 void
 MetaphAdd(metastring * s, char *new_str)
 {
@@ -167,6 +194,7 @@ MetaphAdd(metastring * s, char *new_str)
     strcat(s->str, new_str);
     s->length += add_length;
 }
+
 
 void
 DoubleMetaphone(char *str, char **codes)

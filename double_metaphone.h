@@ -1,3 +1,6 @@
+#ifndef DOUBLE_METAPHONE__H
+#define DOUBLE_METAPHONE__H
+
 
 typedef struct
 {
@@ -12,3 +15,6 @@ metastring;
 void
 DoubleMetaphone(char *str,
                 char **codes);
+
+
+#endif /* DOUBLE_METAPHONE__H */

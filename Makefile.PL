@@ -5,7 +5,7 @@ WriteMakefile(
     'NAME'	=> 'Text::DoubleMetaphone',
     'VERSION_FROM' => 'DoubleMetaphone.pm', # finds $VERSION
     'LIBS'	=> [''],   # e.g., '-lm' 
-    'DEFINE'	=> '',     # e.g., '-DHAVE_SOMETHING' 
+    'DEFINE'	=> '-DMETA_USE_PERL_MALLOC', # e.g., '-DHAVE_SOMETHING' 
     'INC'	=> '',     # e.g., '-I/usr/include/other' 
     'OBJECT'    => 'double_metaphone.o DoubleMetaphone.o',
     'dist'      => {

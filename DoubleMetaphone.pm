@@ -1,5 +1,7 @@
 package Text::DoubleMetaphone;
 
+# $Id: DoubleMetaphone.pm,v 1.3 2001/06/16 08:43:23 maurice Exp $
+
 use strict;
 use Carp;
 use vars qw( $VERSION @ISA @EXPORT_OK $AUTOLOAD );
@@ -11,7 +13,7 @@ require AutoLoader;
 @ISA = qw( Exporter DynaLoader );
 @EXPORT_OK = qw( double_metaphone );
 
-$VERSION = '0.04';
+$VERSION = '0.05';
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
@@ -64,7 +66,7 @@ words that can be plausibly pronounced multiple ways.
 
 For additional details, see Philips' discussion of the algorithm at:
 
-  http://www.cuj.com/archive/1806/feature.html
+  http://www.cuj.com/articles/2000/0006/0006d/0006d.htm?topic=articles
 
 =head1 FUNCTIONS
 
