@@ -44,17 +44,20 @@ double_metaphone(str)
         SV   *sv2;
         PPCODE:
         DoubleMetaphone(str, codes);
-        sv1 = sv_newmortal();
-        sv_usepvn((SV *) sv1, codes[0], strlen(codes[0])); 
-        XPUSHs(sv1);      
 
         if ((GIMME == G_ARRAY) && strcmp(codes[0], codes[1])) 
           {
+            sv1 = sv_newmortal();
+            sv_usepvn((SV *) sv1, codes[0], strlen(codes[0]));
+            XPUSHs(sv1);      
             sv2 = sv_newmortal();
             sv_usepvn((SV *) sv2, codes[1], strlen(codes[1])); 
             XPUSHs(sv2);
           } 
         else 
           {
+            sv1 = sv_newmortal();
+            sv_usepvn((SV *) sv1, codes[0], strlen(codes[0]));
+            XPUSHs(sv1);          
             free(codes[1]);
           }

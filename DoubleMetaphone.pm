@@ -11,7 +11,7 @@ require AutoLoader;
 @ISA = qw( Exporter DynaLoader );
 @EXPORT_OK = qw( double_metaphone );
 
-$VERSION = '0.01';
+$VERSION = '0.02';
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
@@ -48,7 +48,7 @@ Text::DoubleMetaphone - Phonetic encoding of words.
 
 =head1 SYNOPSIS
 
-  use Text::DoubleMetaphone qw( double_metaphone);
+  use Text::DoubleMetaphone qw( double_metaphone );
   my($code1, $code2) = double_metaphone("Aubrey");   
 
 =head1 DESCRIPTION
@@ -62,7 +62,7 @@ In contrast to the Soundex and Metaphone algorithms,
 Double Metaphone will sometimes return two encodings for
 words that can be plausibly pronounced multiple ways.      
 
-For additional details, see Philips' Double Metaphone article at:
+For additional details, see Philips' discussion of the algorith at:
 
   http://www.cuj.com/archive/1806/feature.html
 
@@ -85,6 +85,9 @@ heard U.S. pronounciation of the word.
 Copyright 2000, Maurice Aubrey E<lt>maurice@hevanet.comE<gt>.
 All rights reserved.
 
+This code is based heavily on the C++ implementation by
+Lawrence Philips.   
+
 This module is free software; you may redistribute it and/or
 modify it under the same terms as Perl itself.  
 
@@ -92,7 +95,7 @@ modify it under the same terms as Perl itself.
 
 =head2 Man Pages
 
-L<Text::MetaPhone>, L<Text::Soundex>
+L<Text::Metaphone>, L<Text::Soundex>
 
 =head2 Additional References
 

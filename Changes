@@ -1,4 +1,9 @@
 Revision history for Perl extension Text::DoubleMetaphone.
 
+0.02 Sat Jul 15 19:53:49 PDT 2000
+        - fixed list context under solaris thanks to
+          <schinder@pobox.com> 
+        - documentation fixes
+       
 0.01 Fri Jul 14 19:29:36 PDT 2000
         - initial public release 
