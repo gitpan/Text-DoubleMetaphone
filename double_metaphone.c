@@ -1048,7 +1048,7 @@ DoubleMetaphone(char *str, char **codes)
 			}
 		      else
 			{
-			    MetaphAdd(primary, "0");
+			    MetaphAdd(primary, "O");
 			    MetaphAdd(secondary, "T");
 			}
 		      current += 2;

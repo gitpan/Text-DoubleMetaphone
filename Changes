@@ -1,5 +1,13 @@
 Revision history for Perl extension Text::DoubleMetaphone.
 
+0.06 Thu Mar 25 15:06:01 PST 2004
+        - Fixed zero/O typo thanks to Mark Westenberger
+          <mjw@igs.net>
+
+          WARNING: This change will alter the results for
+          some words, so make sure to recompute any stored
+          codes.
+
 0.05 Wed Jun 27 21:11:03 PDT 2001
         - Added META_USE_PERL_MALLOC #define to use
           Perl's memory management functions; this fixed
