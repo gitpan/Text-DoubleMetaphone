@@ -11,7 +11,7 @@ require AutoLoader;
 @ISA = qw( Exporter DynaLoader );
 @EXPORT_OK = qw( double_metaphone );
 
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()

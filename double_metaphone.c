@@ -193,19 +193,19 @@ DoubleMetaphone(char *str, char **codes)
 
     MakeUpper(original);
 
-    //skip these when at start of word
+    /* skip these when at start of word */
     if (StringAt(original, 0, 2, "GN", "KN", "PN", "WR", "PS", ""))
 	current += 1;
 
-    //Initial 'X' is pronounced 'Z' e.g. 'Xavier'
+    /* Initial 'X' is pronounced 'Z' e.g. 'Xavier' */
     if (GetAt(original, 0) == 'X')
       {
-	  MetaphAdd(primary, "S");	//'Z' maps to 'S'
+	  MetaphAdd(primary, "S");	/* 'Z' maps to 'S' */
 	  MetaphAdd(secondary, "S");
 	  current += 1;
       }
 
-    ///////////main loop//////////////////////////
+    /* main loop */
     while ((primary->length < 4) || (secondary->length < 4))  
       {
 	  if (current >= length)
@@ -221,7 +221,7 @@ DoubleMetaphone(char *str, char **codes)
 	    case 'Y':
 		if (current == 0)
                   {
-		    //all init vowels now map to 'A'
+		    /* all init vowels now map to 'A' */
 		    MetaphAdd(primary, "A");
 		    MetaphAdd(secondary, "A");
                   }
@@ -230,7 +230,7 @@ DoubleMetaphone(char *str, char **codes)
 
 	    case 'B':
 
-		//"-mb", e.g", "dumb", already skipped over...
+		/* "-mb", e.g", "dumb", already skipped over... */
 		MetaphAdd(primary, "P");
 		MetaphAdd(secondary, "P");
 
@@ -247,7 +247,7 @@ DoubleMetaphone(char *str, char **codes)
 		break;
 
 	    case 'C':
-		//various germanic
+		/* various germanic */
 		if ((current > 1)
 		    && !IsVowel(original, current - 2)
 		    && StringAt(original, (current - 1), 3, "ACH", "")
@@ -262,7 +262,7 @@ DoubleMetaphone(char *str, char **codes)
 		      break;
 		  }
 
-		//special case 'caesar'
+		/* special case 'caesar' */
 		if ((current == 0)
 		    && StringAt(original, current, 6, "CAESAR", ""))
 		  {
@@ -272,7 +272,7 @@ DoubleMetaphone(char *str, char **codes)
 		      break;
 		  }
 
-		//italian 'chianti'
+		/* italian 'chianti' */
 		if (StringAt(original, current, 4, "CHIA", ""))
 		  {
 		      MetaphAdd(primary, "K");
@@ -283,7 +283,7 @@ DoubleMetaphone(char *str, char **codes)
 
 		if (StringAt(original, current, 2, "CH", ""))
 		  {
-		      //find 'michael'
+		      /* find 'michael' */
 		      if ((current > 0)
 			  && StringAt(original, current, 4, "CHAE", ""))
 			{
@@ -293,7 +293,7 @@ DoubleMetaphone(char *str, char **codes)
 			    break;
 			}
 
-		      //greek roots e.g. 'chemistry', 'chorus'
+		      /* greek roots e.g. 'chemistry', 'chorus' */
 		      if ((current == 0)
 			  && (StringAt(original, (current + 1), 5, "HARAC", "HARIS", "")
 			   || StringAt(original, (current + 1), 3, "HOR",
@@ -306,18 +306,18 @@ DoubleMetaphone(char *str, char **codes)
 			    break;
 			}
 
-		      //germanic, greek, or otherwise 'ch' for 'kh' sound
+		      /* germanic, greek, or otherwise 'ch' for 'kh' sound */
 		      if (
 			  (StringAt(original, 0, 4, "VAN ", "VON ", "")
 			   || StringAt(original, 0, 3, "SCH", ""))
-			  // 'architect but not 'arch', 'orchestra', 'orchid'
+			  /*  'architect but not 'arch', 'orchestra', 'orchid' */
 			  || StringAt(original, (current - 2), 6, "ORCHES",
 				      "ARCHIT", "ORCHID", "")
 			  || StringAt(original, (current + 2), 1, "T", "S",
 				      "")
 			  || ((StringAt(original, (current - 1), 1, "A", "O", "U", "E", "") 
                           || (current == 0))
-			   //e.g., 'wachtler', 'wechsler', but not 'tichner'
+			   /* e.g., 'wachtler', 'wechsler', but not 'tichner' */
 			  && StringAt(original, (current + 2), 1, "L", "R",
 		                      "N", "M", "B", "H", "F", "V", "W", " ", "")))
 			{
@@ -330,7 +330,7 @@ DoubleMetaphone(char *str, char **codes)
 			      {
 				  if (StringAt(original, 0, 2, "MC", ""))
 				    {
-					//e.g., "McHugh"
+					/* e.g., "McHugh" */
 					MetaphAdd(primary, "K");
 					MetaphAdd(secondary, "K");
 				    }
@@ -349,7 +349,7 @@ DoubleMetaphone(char *str, char **codes)
 		      current += 2;
 		      break;
 		  }
-		//e.g, 'czerny'
+		/* e.g, 'czerny' */
 		if (StringAt(original, current, 2, "CZ", "")
 		    && !StringAt(original, (current - 2), 4, "WICZ", ""))
 		  {
@@ -359,7 +359,7 @@ DoubleMetaphone(char *str, char **codes)
 		      break;
 		  }
 
-		//e.g., 'focaccia'
+		/* e.g., 'focaccia' */
 		if (StringAt(original, (current + 1), 3, "CIA", ""))
 		  {
 		      MetaphAdd(primary, "X");
@@ -368,14 +368,14 @@ DoubleMetaphone(char *str, char **codes)
 		      break;
 		  }
 
-		//double 'C', but not if e.g. 'McClellan'
+		/* double 'C', but not if e.g. 'McClellan' */
 		if (StringAt(original, current, 2, "CC", "")
 		    && !((current == 1) && (GetAt(original, 0) == 'M')))
-		    //'bellocchio' but not 'bacchus'
+		    /* 'bellocchio' but not 'bacchus' */
 		    if (StringAt(original, (current + 2), 1, "I", "E", "H", "")
 			&& !StringAt(original, (current + 2), 2, "HU", ""))
 		      {
-			  //'accident', 'accede' 'succeed'
+			  /* 'accident', 'accede' 'succeed' */
 			  if (
 			      ((current == 1)
 			       && (GetAt(original, current - 1) == 'A'))
@@ -384,7 +384,7 @@ DoubleMetaphone(char *str, char **codes)
 			    {
 				MetaphAdd(primary, "KS");
 				MetaphAdd(secondary, "KS");
-				//'bacci', 'bertucci', other italian
+				/* 'bacci', 'bertucci', other italian */
 			    }
 			  else
 			    {
@@ -395,7 +395,7 @@ DoubleMetaphone(char *str, char **codes)
 			  break;
 		      }
 		    else
-		      {	  //Pierce's rule
+		      {	  /* Pierce's rule */
 			  MetaphAdd(primary, "K");
 			  MetaphAdd(secondary, "K");
 			  current += 2;
@@ -412,7 +412,7 @@ DoubleMetaphone(char *str, char **codes)
 
 		if (StringAt(original, current, 2, "CI", "CE", "CY", ""))
 		  {
-		      //italian vs. english
+		      /* italian vs. english */
 		      if (StringAt
 			  (original, current, 3, "CIO", "CIE", "CIA", ""))
 			{
@@ -428,11 +428,11 @@ DoubleMetaphone(char *str, char **codes)
 		      break;
 		  }
 
-		//else
+		/* else */
 		MetaphAdd(primary, "K");
 		MetaphAdd(secondary, "K");
 
-		//name sent in 'mac caffrey', 'mac gregor
+		/* name sent in 'mac caffrey', 'mac gregor */
 		if (StringAt(original, (current + 1), 2, " C", " Q", " G", ""))
 		    current += 3;
 		else
@@ -448,7 +448,7 @@ DoubleMetaphone(char *str, char **codes)
                   {
 		      if (StringAt(original, (current + 2), 1, "I", "E", "Y", ""))
 		        {
-			    //e.g. 'edge'
+			    /* e.g. 'edge' */
 			    MetaphAdd(primary, "J");
 			    MetaphAdd(secondary, "J");
 			    current += 3;
@@ -456,7 +456,7 @@ DoubleMetaphone(char *str, char **codes)
 		        }
 		      else
 		        {
-			    //e.g. 'edgar'
+			    /* e.g. 'edgar' */
 			    MetaphAdd(primary, "TK");
 			    MetaphAdd(secondary, "TK");
 			    current += 2;
@@ -472,7 +472,7 @@ DoubleMetaphone(char *str, char **codes)
 		      break;
 		  }
 
-		//else
+		/* else */
 		MetaphAdd(primary, "T");
 		MetaphAdd(secondary, "T");
 		current += 1;
@@ -500,7 +500,7 @@ DoubleMetaphone(char *str, char **codes)
 
 		      if (current < 3)
 			{
-			    //'ghislane', ghiradelli
+			    /* 'ghislane', ghiradelli */
 			    if (current == 0)
 			      {
 				  if (GetAt(original, current + 2) == 'I')
@@ -517,14 +517,14 @@ DoubleMetaphone(char *str, char **codes)
 				  break;
 			      }
 			}
-		      //Parker's rule (with some further refinements) - e.g., 'hugh'
+		      /* Parker's rule (with some further refinements) - e.g., 'hugh' */
 		      if (
 			  ((current > 1)
 			   && StringAt(original, (current - 2), 1, "B", "H", "D", ""))
-			  //e.g., 'bough'
+			  /* e.g., 'bough' */
 			  || ((current > 2)
 			      && StringAt(original, (current - 3), 1, "B", "H", "D", ""))
-			  //e.g., 'broughton'
+			  /* e.g., 'broughton' */
 			  || ((current > 3)
 			      && StringAt(original, (current - 4), 1, "B", "H", "")))
 			{
@@ -533,7 +533,7 @@ DoubleMetaphone(char *str, char **codes)
 			}
 		      else
 			{
-			    //e.g., 'laugh', 'McLaughlin', 'cough', 'gough', 'rough', 'tough'
+			    /* e.g., 'laugh', 'McLaughlin', 'cough', 'gough', 'rough', 'tough' */
 			    if ((current > 2)
 				&& (GetAt(original, current - 1) == 'U')
 				&& StringAt(original, (current - 3), 1, "C",
@@ -565,7 +565,7 @@ DoubleMetaphone(char *str, char **codes)
 			    MetaphAdd(secondary, "N");
 			}
 		      else
-			  //not e.g. 'cagney'
+			  /* not e.g. 'cagney' */
 			  if (!StringAt(original, (current + 2), 2, "EY", "")
 			      && (GetAt(original, current + 1) != 'Y')
 			      && !SlavoGermanic(original))
@@ -582,7 +582,7 @@ DoubleMetaphone(char *str, char **codes)
 		      break;
 		  }
 
-		//'tagliaro'
+		/* 'tagliaro' */
 		if (StringAt(original, (current + 1), 2, "LI", "")
 		    && !SlavoGermanic(original))
 		  {
@@ -592,7 +592,7 @@ DoubleMetaphone(char *str, char **codes)
 		      break;
 		  }
 
-		//-ges-,-gep-,-gel-, -gie- at beginning
+		/* -ges-,-gep-,-gel-, -gie- at beginning */
 		if ((current == 0)
 		    && ((GetAt(original, current + 1) == 'Y')
 			|| StringAt(original, (current + 1), 2, "ES", "EP",
@@ -605,7 +605,7 @@ DoubleMetaphone(char *str, char **codes)
 		      break;
 		  }
 
-		// -ger-,  -gy-
+		/*  -ger-,  -gy- */
 		if (
 		    (StringAt(original, (current + 1), 2, "ER", "")
 		     || (GetAt(original, current + 1) == 'Y'))
@@ -620,11 +620,11 @@ DoubleMetaphone(char *str, char **codes)
 		      break;
 		  }
 
-		// italian e.g, 'biaggi'
+		/*  italian e.g, 'biaggi' */
 		if (StringAt(original, (current + 1), 1, "E", "I", "Y", "")
 		    || StringAt(original, (current - 1), 4, "AGGI", "OGGI", ""))
 		  {
-		      //obvious germanic
+		      /* obvious germanic */
 		      if (
 			  (StringAt(original, 0, 4, "VAN ", "VON ", "")
 			   || StringAt(original, 0, 3, "SCH", ""))
@@ -635,7 +635,7 @@ DoubleMetaphone(char *str, char **codes)
 			}
 		      else
 			{
-			    //always soft if french ending
+			    /* always soft if french ending */
 			    if (StringAt
 				(original, (current + 1), 4, "IER ", ""))
 			      {
@@ -661,7 +661,7 @@ DoubleMetaphone(char *str, char **codes)
 		break;
 
 	    case 'H':
-		//only keep if first & before vowel or btw. 2 vowels
+		/* only keep if first & before vowel or btw. 2 vowels */
 		if (((current == 0) || IsVowel(original, current - 1))
 		    && IsVowel(original, current + 1))
 		  {
@@ -669,12 +669,12 @@ DoubleMetaphone(char *str, char **codes)
 		      MetaphAdd(secondary, "H");
 		      current += 2;
 		  }
-		else		//also takes care of 'HH'
+		else		/* also takes care of 'HH' */
 		    current += 1;
 		break;
 
 	    case 'J':
-		//obvious spanish, 'jose', 'san jacinto'
+		/* obvious spanish, 'jose', 'san jacinto' */
 		if (StringAt(original, current, 4, "JOSE", "")
 		    || StringAt(original, 0, 4, "SAN ", ""))
 		  {
@@ -697,12 +697,12 @@ DoubleMetaphone(char *str, char **codes)
 		if ((current == 0)
 		    && !StringAt(original, current, 4, "JOSE", ""))
 		  {
-		      MetaphAdd(primary, "J");	//Yankelovich/Jankelowicz
+		      MetaphAdd(primary, "J");	/* Yankelovich/Jankelowicz */
 		      MetaphAdd(secondary, "A");
 		  }
 		else
 		  {
-		      //spanish pron. of e.g. 'bajador'
+		      /* spanish pron. of e.g. 'bajador' */
 		      if (IsVowel(original, current - 1)
 			  && !SlavoGermanic(original)
 			  && ((GetAt(original, current + 1) == 'A')
@@ -732,7 +732,7 @@ DoubleMetaphone(char *str, char **codes)
 			}
 		  }
 
-		if (GetAt(original, current + 1) == 'J')	//it could happen!
+		if (GetAt(original, current + 1) == 'J')	/* it could happen! */
 		    current += 2;
 		else
 		    current += 1;
@@ -750,7 +750,7 @@ DoubleMetaphone(char *str, char **codes)
 	    case 'L':
 		if (GetAt(original, current + 1) == 'L')
 		  {
-		      //spanish e.g. 'cabrillo', 'gallegos'
+		      /* spanish e.g. 'cabrillo', 'gallegos' */
 		      if (((current == (length - 3))
 			   && StringAt(original, (current - 1), 4, "ILLO",
 				       "ILLA", "ALLE", ""))
@@ -775,7 +775,7 @@ DoubleMetaphone(char *str, char **codes)
 		if ((StringAt(original, (current - 1), 3, "UMB", "")
 		     && (((current + 1) == last)
 			 || StringAt(original, (current + 2), 2, "ER", "")))
-		    //'dumb','thumb'
+		    /* 'dumb','thumb' */
 		    || (GetAt(original, current + 1) == 'M'))
 		    current += 2;
 		else
@@ -808,7 +808,7 @@ DoubleMetaphone(char *str, char **codes)
 		      break;
 		  }
 
-		//also account for "campbell", "raspberry"
+		/* also account for "campbell", "raspberry" */
 		if (StringAt(original, (current + 1), 1, "P", "B", ""))
 		    current += 2;
 		else
@@ -827,7 +827,7 @@ DoubleMetaphone(char *str, char **codes)
 		break;
 
 	    case 'R':
-		//french e.g. 'rogier', but exclude 'hochmeier'
+		/* french e.g. 'rogier', but exclude 'hochmeier' */
 		if ((current == last)
 		    && !SlavoGermanic(original)
 		    && StringAt(original, (current - 2), 2, "IE", "")
@@ -849,14 +849,14 @@ DoubleMetaphone(char *str, char **codes)
 		break;
 
 	    case 'S':
-		//special cases 'island', 'isle', 'carlisle', 'carlysle'
+		/* special cases 'island', 'isle', 'carlisle', 'carlysle' */
 		if (StringAt(original, (current - 1), 3, "ISL", "YSL", ""))
 		  {
 		      current += 1;
 		      break;
 		  }
 
-		//special case 'sugar-'
+		/* special case 'sugar-' */
 		if ((current == 0)
 		    && StringAt(original, current, 5, "SUGAR", ""))
 		  {
@@ -868,7 +868,7 @@ DoubleMetaphone(char *str, char **codes)
 
 		if (StringAt(original, current, 2, "SH", ""))
 		  {
-		      //germanic
+		      /* germanic */
 		      if (StringAt
 			  (original, (current + 1), 4, "HEIM", "HOEK", "HOLM",
 			   "HOLZ", ""))
@@ -885,7 +885,7 @@ DoubleMetaphone(char *str, char **codes)
 		      break;
 		  }
 
-		//italian & armenian
+		/* italian & armenian */
 		if (StringAt(original, current, 3, "SIO", "SIA", "")
 		    || StringAt(original, current, 4, "SIAN", ""))
 		  {
@@ -903,8 +903,8 @@ DoubleMetaphone(char *str, char **codes)
 		      break;
 		  }
 
-		//german & anglicisations, e.g. 'smith' match 'schmidt', 'snider' match 'schneider'
-		//also, -sz- in slavic language altho in hungarian it is pronounced 's'
+		/* german & anglicisations, e.g. 'smith' match 'schmidt', 'snider' match 'schneider' 
+		   also, -sz- in slavic language altho in hungarian it is pronounced 's' */
 		if (((current == 0)
 		     && StringAt(original, (current + 1), 1, "M", "N", "L", "W", ""))
 		    || StringAt(original, (current + 1), 1, "Z", ""))
@@ -920,13 +920,13 @@ DoubleMetaphone(char *str, char **codes)
 
 		if (StringAt(original, current, 2, "SC", ""))
 		  {
-		      //Schlesinger's rule
+		      /* Schlesinger's rule */
 		      if (GetAt(original, current + 2) == 'H')
-			  //dutch origin, e.g. 'school', 'schooner'
+			  /* dutch origin, e.g. 'school', 'schooner' */
 			  if (StringAt(original, (current + 3), 2, "OO", "ER", "EN",
 			               "UY", "ED", "EM", ""))
 			    {
-				//'schermerhorn', 'schenker'
+				/* 'schermerhorn', 'schenker' */
 				if (StringAt(original, (current + 3), 2, "ER", "EN", ""))
 				  {
 				      MetaphAdd(primary, "X");
@@ -964,14 +964,14 @@ DoubleMetaphone(char *str, char **codes)
 			    current += 3;
 			    break;
 			}
-		      //else
+		      /* else */
 		      MetaphAdd(primary, "SK");
 		      MetaphAdd(secondary, "SK");
 		      current += 3;
 		      break;
 		  }
 
-		//french e.g. 'resnais', 'artois'
+		/* french e.g. 'resnais', 'artois' */
 		if ((current == last)
 		    && StringAt(original, (current - 2), 2, "AI", "OI", ""))
 		  {
@@ -1010,7 +1010,7 @@ DoubleMetaphone(char *str, char **codes)
 		if (StringAt(original, current, 2, "TH", "")
 		    || StringAt(original, current, 3, "TTH", ""))
 		  {
-		      //special case 'thomas', 'thames' or germanic
+		      /* special case 'thomas', 'thames' or germanic */
 		      if (StringAt(original, (current + 2), 2, "OM", "AM", "")
 			  || StringAt(original, 0, 4, "VAN ", "VON ", "")
 			  || StringAt(original, 0, 3, "SCH", ""))
@@ -1045,7 +1045,7 @@ DoubleMetaphone(char *str, char **codes)
 		break;
 
 	    case 'W':
-		//can also be in middle of word
+		/* can also be in middle of word */
 		if (StringAt(original, current, 2, "WR", ""))
 		  {
 		      MetaphAdd(primary, "R");
@@ -1058,7 +1058,7 @@ DoubleMetaphone(char *str, char **codes)
 		    && (IsVowel(original, current + 1)
 			|| StringAt(original, current, 2, "WH", "")))
 		  {
-		      //Wasserman should match Vasserman
+		      /* Wasserman should match Vasserman */
 		      if (IsVowel(original, current + 1))
 			{
 			    MetaphAdd(primary, "A");
@@ -1066,13 +1066,13 @@ DoubleMetaphone(char *str, char **codes)
 			}
 		      else
 			{
-			    //need Uomo to match Womo
+			    /* need Uomo to match Womo */
 			    MetaphAdd(primary, "A");
 			    MetaphAdd(secondary, "A");
 			}
 		  }
 
-		//Arnow should match Arnoff
+		/* Arnow should match Arnoff */
 		if (((current == last) && IsVowel(original, current - 1))
 		    || StringAt(original, (current - 1), 5, "EWSKI", "EWSKY",
 				"OWSKI", "OWSKY", "")
@@ -1084,7 +1084,7 @@ DoubleMetaphone(char *str, char **codes)
 		      break;
 		  }
 
-		//polish e.g. 'filipowicz'
+		/* polish e.g. 'filipowicz' */
 		if (StringAt(original, current, 4, "WICZ", "WITZ", ""))
 		  {
 		      MetaphAdd(primary, "TS");
@@ -1093,12 +1093,12 @@ DoubleMetaphone(char *str, char **codes)
 		      break;
 		  }
 
-		//else skip it
+		/* else skip it */
 		current += 1;
 		break;
 
 	    case 'X':
-		//french e.g. breaux
+		/* french e.g. breaux */
 		if (!((current == last)
 		      && (StringAt(original, (current - 3), 3, "IAU", "EAU", "")
 		       || StringAt(original, (current - 2), 2, "AU", "OU", ""))))
@@ -1115,7 +1115,7 @@ DoubleMetaphone(char *str, char **codes)
 		break;
 
 	    case 'Z':
-		//chinese pinyin e.g. 'zhao'
+		/* chinese pinyin e.g. 'zhao' */
 		if (GetAt(original, current + 1) == 'H')
 		  {
 		      MetaphAdd(primary, "J");
